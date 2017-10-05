@@ -1,5 +1,6 @@
 <!doctype html>
 <meta charset="utf-8">
+<style>.ok { background: #0FA; }.fail { background: red; }</style>
 <script>
 window.Map = null;
 window.Set = null;
@@ -15,3 +16,8 @@ window.WeakSet = WeakSet;
 </script>
 <script defer src="https://unpkg.com/tressa@latest/tressa.js"></script>
 <script defer src="./test.js"></script>
+<script>
+this.onload = function () {
+  document.documentElement.className = tressa.exitCode ? 'fail' : 'ok';
+};
+</script>

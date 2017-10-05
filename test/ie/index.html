@@ -1,0 +1,24 @@
+<!doctype html>
+<meta charset="utf-8">
+<style>.ok { background: #0FA; }.fail { background: red; }</style>
+<script src="https://unpkg.com/tressa@latest/tressa.js"></script>
+<script>
+window.Map = null;
+window.Set = null;
+window.WeakMap = null;
+window.WeakSet = null;
+</script>
+<script src="../../min.js"></script>
+<script>
+(function () {
+  var xhr = new XMLHttpRequest();
+  xhr.open('get', '../test.js', false);
+  xhr.send();
+  Function(
+    xhr.responseText
+      .replace(/for\([\s\S]+?;/g, '')
+      .replace(/const /g, 'var ')
+  )();
+  document.documentElement.className = tressa.exitCode ? 'fail' : 'ok';
+}());
+</script>
