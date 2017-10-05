@@ -35,11 +35,9 @@ export const Set = window.Set || function Set() {
 };
 
 let i = 0;
-const uid = () => '__' + [i++, Math.random()];
-
 const hOP = {}.hasOwnProperty;
 export const WeakMap = window.WeakMap || function WeakMap() {
-  const id = uid();
+  const id = '__' + [i++, Math.random()];
   const has = obj => hOP.call(obj, id);
   return {
     has,
@@ -56,13 +54,12 @@ export const WeakMap = window.WeakMap || function WeakMap() {
 };
 
 export const WeakSet = window.WeakSet || function WeakSet() {
-  const id = uid();
   const wm = new WeakMap;
   return {
-    has: obj => wm.get(obj) === id,
+    has: obj => wm.get(obj) === true,
     delete: wm.delete,
     add(obj) {
-      wm.set(obj, id);
+      wm.set(obj, true);
       return this;
     }
   };

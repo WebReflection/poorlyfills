@@ -7,7 +7,7 @@ Simplified, partial, and poor ES6 collections polyfills, targeting IE9+ and olde
   * **Map** based on double private arrays and `indexOf(...)` quirks
   * **Set** based on a map with same values as keys
   * **WeakMap** based on a configurable, not enumerable, not writable, unique id property
-  * **WeakSet** based on a WeakMap and a unique id as value
+  * **WeakSet** based on a WeakMap and a simple `true` value per each key
 
 All collections are missing constructor functionality and Symbols features.
 
