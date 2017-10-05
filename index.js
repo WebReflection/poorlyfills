@@ -1,4 +1,4 @@
-/*! (c) 2017 Andrea Giammarchi, @WebReflection (ISC) */
+/*! (c) 2017 Andrea Giammarchi @WebReflection, (ISC) */
 
 export const Map = window.Map || function Map() {
   let i, k, v;
@@ -11,32 +11,27 @@ export const Map = window.Map || function Map() {
     get: obj => v[k.indexOf(obj)],
     keys: () => k.slice(),
     values: () => v.slice(),
-    entries: () => k.map((key, i) => [key, value[i]]),
+    entries: () => k.map((key, i) => [key, v[i]]),
     delete: obj => has(obj) && k.splice(i, 1) && !!v.splice(i, 1),
     forEach(fn, self) {
-      v.forEach((value, i) => fn(value, k[i], this), self);
+      v.forEach((value, i) => fn.call(self, value, k[i], this));
     },
     set(obj, value) {
-      if (!has(obj)) i = k.length;
-      k[i] = obj;
-      v[i] = value;
-      return this;
+      return (has(obj) ?
+        (v[i] = value) :
+        (v[k.push(obj) - 1] = value)
+      ), this;
     }
   };
 };
 
 export const Set = window.Set || function Set() {
   const m = new Map;
-  return {
-    // ignored: entries, forEach
-    get size() { return m.size; },
-    has: obj => m.has(obj),
-    clear: m.clear,
-    values: obj => m.keys(obj),
-    keys: m.keys,
-    add: obj => m.set(obj, 1),
-    delete: m.delete
-  };
+  const set = m.set;
+  delete m.get;
+  delete m.set;
+  m.add = obj => set.call(m, obj, obj);
+  return m;
 };
 
 let i = 0;
@@ -65,7 +60,10 @@ export const WeakSet = window.WeakSet || function WeakSet() {
   const wm = new WeakMap;
   return {
     has: obj => wm.get(obj) === id,
-    add: obj => wm.set(obj, id),
-    delete: wm.delete
+    delete: wm.delete,
+    add(obj) {
+      wm.set(obj, id);
+      return this;
+    }
   };
 };

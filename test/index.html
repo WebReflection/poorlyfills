@@ -1,0 +1,17 @@
+<!doctype html>
+<meta charset="utf-8">
+<script>
+window.Map = null;
+window.Set = null;
+window.WeakMap = null;
+window.WeakSet = null;
+</script>
+<script type="module">
+import {Map, Set, WeakMap, WeakSet} from '../index.js';
+window.Map = Map;
+window.Set = Set;
+window.WeakMap = WeakMap;
+window.WeakSet = WeakSet;
+</script>
+<script defer src="https://unpkg.com/tressa@latest/tressa.js"></script>
+<script defer src="./test.js"></script>

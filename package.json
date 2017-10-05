@@ -4,8 +4,33 @@
   "description": "coming soon",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
+    "build": "npm run test && npm run _es5 && npm run _fixb && npm run _minify && npm run _clean && npm run size",
+    "size": "cat index.js | wc -c;cat min.js | wc -c;gzip -c min.js | wc -c",
+    "test": "node test/c.js && istanbul cover test/test.c.js",
+    "_clean": "rm test/test.c.js && rm index.{b,c}.js",
+    "_es5": "babel ./index.c.js --out-file ./index.b.js --presets=es2015",
+    "_fixb": "sed -i 's/(undefined)/(this)/' ./index.b.js",
+    "_minify": "uglifyjs ./index.b.js --comments=/^!/ --compress --mangle -o min.js"
   },
   "author": "Andrea Giammarchi",
-  "license": "ISC"
+  "license": "ISC",
+  "keywords": [
+    "Map",
+    "Set",
+    "WeakMap",
+    "WeakSet",
+    "polyfill",
+    "basic",
+    "simple",
+    "poor"
+  ],
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "coveralls": "^3.0.0",
+    "istanbul": "^0.4.5",
+    "tressa": "^0.3.1",
+    "uglify-js": "^3.1.3"
+  }
 }
