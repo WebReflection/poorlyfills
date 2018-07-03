@@ -2,6 +2,7 @@
   "name": "poorlyfills",
   "version": "0.1.1",
   "description": "coming soon",
+  "unpkg": "min.js",
   "main": "index.js",
   "scripts": {
     "coveralls": "cat ./coverage/lcov.info | coveralls",
