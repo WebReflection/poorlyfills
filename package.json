@@ -3,16 +3,18 @@
   "version": "0.1.2",
   "description": "coming soon",
   "unpkg": "min.js",
+  "module": "esm.js",
   "main": "index.js",
   "scripts": {
     "coveralls": "cat ./coverage/lcov.info | coveralls",
-    "build": "npm run test && npm run _es5 && npm run _fixb && npm run _minify && npm run _clean && npm run size",
+    "build": "npm run test && npm run _esm && npm run _es5 && npm run _fixb && npm run _minify && npm run _clean && npm run size",
     "size": "cat index.js | wc -c;cat min.js | wc -c;gzip -c min.js | wc -c",
     "test": "node test/c.js && istanbul cover test/test.c.js",
     "_clean": "rm test/test.c.js && rm index.{b,c}.js",
     "_es5": "babel ./index.c.js --out-file ./index.b.js --presets=es2015",
-    "_fixb": "sed -i 's/(undefined)/(this)/' ./index.b.js",
-    "_minify": "uglifyjs ./index.b.js --comments=/^!/ --compress --mangle -o min.js"
+    "_fixb": "sed -i '' 's/(undefined)/(this)/' ./index.b.js",
+    "_minify": "uglifyjs ./index.b.js --comments=/^!/ --compress --mangle -o min.js",
+    "_esm": "BABEL_ENV=esm babel ./index.js --out-file ./esm.js"
   },
   "author": "Andrea Giammarchi",
   "license": "ISC",
